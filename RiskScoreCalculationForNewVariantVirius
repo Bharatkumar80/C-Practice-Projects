@@ -89,7 +89,7 @@ int main() {
         bmiIndex = (weightInLb * 703) / pow(heightInInch, 2);
 
         // Output initial report
-        cout << "\nYour NOVID24 Report:" << endl;
+        cout << "\nYour MOVID25 Report:" << endl;
         cout << setprecision(1) << fixed;
         cout << "Weight is " << weightInLb << " pounds; Height is " << heightInInch << " inches." << endl;
         cout << "Body Mass Index value is " << setprecision(2) << bmiIndex;
@@ -210,7 +210,7 @@ int main() {
     // repeat if user inputs Y 
     while (continueInterview == 'Y' || continueInterview == 'y');
 
-    cout << "Thank you for using the NOVID24 assessment program." << endl;
+    cout << "Thank you for using the MOVID25 assessment program." << endl;
     return 0;
 
 }
