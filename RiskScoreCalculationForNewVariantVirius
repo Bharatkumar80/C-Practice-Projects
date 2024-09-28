@@ -1,0 +1,217 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cmath> // Include cmath for the pow function
+
+using namespace std;
+
+// Risk Score calculation of new variant of viruis based on some inputs by medical technician
+
+int main() {
+    // Declaring all the variables that we are going to use in the program
+    double heightInInch, weightInLb, ageInYears, bodyTempInF, riskScore = 0, bmiIndex;
+    int troubleInBreath, chestPain;
+    string difficultyLevel, chestLevel, tempDescription, ageDescription;
+    char continueInterview; 
+
+    do {
+        // Taking the inputs from the user
+        cout << "Please Enter Height of Person in Inches: ";   
+        cin >> heightInInch;
+
+        // Validating User Input for height 
+        while (heightInInch < 48) {
+            cout << "The Value you entered for height which is " << heightInInch << " is not valid! " << endl;
+            cout << "The value of height should be at least 48 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for Height of Person in Inches: ";
+            cin >> heightInInch;
+        }
+
+        cout << "Please Enter Weight of Person in Pounds: "; 
+        cin >> weightInLb;
+
+        // Validating User Input for weight 
+        while (weightInLb <= 75) {
+            cout << "The Value you entered for weight which is " << weightInLb << " is not valid! " << endl;
+            cout << "The value of weight should be greater than 75 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for Weight of Person in Pounds: ";
+            cin >> weightInLb;
+        }
+
+        cout << "Please Enter Age of Person in Years: "; 
+        cin >> ageInYears;
+
+        // Validating User Input for Age
+        while (ageInYears < 18) {
+            cout << "The Value you entered for Age which is " << ageInYears << " is not valid! " << endl;
+            cout << "The value of age should be at least 18 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for Age of Person in Years: ";
+            cin >> ageInYears;
+        }
+
+        cout << "Please Enter Body Temperature of Person in Fahrenheit: "; 
+        cin >> bodyTempInF;
+
+        // Validating User Input for Body Temperature
+        while (bodyTempInF < 95) {
+            cout << "The Value you entered for body temperature which is " << bodyTempInF << " is not valid! " << endl;
+            cout << "The value of body temperature should be at least 95 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for body Temperature of Person in Fahrenheit: ";
+            cin >> bodyTempInF;
+        }
+
+        // Asking questions about level of pain or discomfort from scale 0 to 10
+        cout << "Please Provide the value of these questions from Scale 0 to 10;" << endl 
+             << "Zero means no pain or discomfort and 10 is the most severe." << endl; 
+        cout << "Do you have trouble breathing or experience shortness of breath? ";
+        cin >> troubleInBreath;
+
+        // Validating User Input for trouble in breath
+        while (troubleInBreath < 0 || troubleInBreath > 10) {
+            cout << "The Value you entered for trouble breathing which is " << troubleInBreath << " is out of scale! " << endl;
+            cout << "The value should be from 0 to 10 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for Trouble Breathing Range: ";
+            cin >> troubleInBreath;
+        }
+
+        cout << "Are you experiencing chest pain? ";
+        cin >> chestPain;
+
+        // Validating User Input for chest pain
+        while (chestPain < 0 || chestPain > 10) {
+            cout << "The Value you entered for chest pain which is " << chestPain << " is out of scale! " << endl;
+            cout << "The value should be from 0 to 10 in order to get the risk factor! " << endl;
+            cout << "Please enter a valid value for Chest Pain Range: ";
+            cin >> chestPain;
+        }
+
+        // Calculate BMI Index
+        bmiIndex = (weightInLb * 703) / pow(heightInInch, 2);
+
+        // Output initial report
+        cout << "\nYour NOVID24 Report:" << endl;
+        cout << setprecision(1) << fixed;
+        cout << "Weight is " << weightInLb << " pounds; Height is " << heightInInch << " inches." << endl;
+        cout << "Body Mass Index value is " << setprecision(2) << bmiIndex;
+        cout << setprecision(1) << fixed;
+
+        // Provide BMI classification
+        if (bmiIndex < 18.5) {
+            cout << ", You are considered Underweight." << endl;
+        } else if (bmiIndex >= 18.5 && bmiIndex < 25) {
+            cout << ", You are considered Normal weight." << endl;
+        } else if (bmiIndex >= 25 && bmiIndex < 30) {
+            cout << ", You are considered Overweight." << endl;
+        } else {
+            cout << ", You are considered Very Obese." << endl;
+        }
+
+        cout << "You are " << ageInYears << " years old.";
+        
+        // Provide age classification
+        if (ageInYears >= 65) {
+            ageDescription = ", You are considered Older.";
+            cout << ageDescription;
+        }
+        cout << endl;
+
+        // Provide temperature description
+        cout << "You reported a temperature of " << bodyTempInF;
+        if (bodyTempInF > 100.4 && bodyTempInF<=102) {
+            tempDescription = ", You have a Fever.";
+            cout << tempDescription;
+
+        }
+        else if (bodyTempInF > 102) {
+            tempDescription = ", You have a High Fever.";
+            cout << tempDescription;
+        }
+
+        cout << endl;
+
+        // Calculate Risk Score
+        if (bmiIndex >= 25 && bmiIndex < 30) {
+            riskScore += 5;
+        } else if (bmiIndex >= 30 && bmiIndex < 40) {
+            riskScore += 15;
+        } else if (bmiIndex >= 40) {
+            riskScore += 35;
+        }
+
+        if (ageInYears >= 65) {
+            riskScore += 20;
+        } else if (ageInYears >= 60 && ageInYears <= 64) {
+            riskScore += 10;
+        } else if (ageInYears >= 42 && ageInYears <= 59) {
+            riskScore += 5;
+        }
+
+        if (bodyTempInF > 102.0) {
+            riskScore += 40;
+        } else if (bodyTempInF > 100.4 && bodyTempInF <= 102.0) {
+            riskScore += 25;
+        }
+
+        if (troubleInBreath >= 1 && troubleInBreath <= 3) {
+            riskScore += 10; // Mild
+            difficultyLevel = "Mild";
+        } else if (troubleInBreath >= 4 && troubleInBreath <= 6) {
+            riskScore += 20; // Moderate
+            difficultyLevel = "Moderate";
+        } else if (troubleInBreath >= 7 && troubleInBreath <= 10) {
+            riskScore += 40; // Severe
+            difficultyLevel = "Severe";
+        }
+
+        cout << "You reported " << difficultyLevel << " difficulty breathing." << endl;
+
+        if (chestPain >= 1 && chestPain <= 3) {
+            riskScore += 10; // Mild
+            chestLevel = "Mild";
+        } else if (chestPain >= 4 && chestPain <= 6) {
+            riskScore += 25; // Moderate
+            chestLevel = "Moderate";
+        } else if (chestPain >= 7 && chestPain <= 10) {
+            riskScore += 50; // Severe
+            chestLevel = "Severe";
+        }
+
+        cout << "You reported " << chestLevel << " chest pain." << endl;
+
+        cout<<""<<endl;
+
+        cout << "Your Risk Score is " << riskScore << ". Your recommendation is: " << endl;
+
+
+        // Provide recommendations based on Risk Score
+        if (riskScore < 20) {
+            cout << "Get adequate rest and drink plenty of fluids." << endl;
+        } else if (riskScore >= 20 && riskScore < 50) {
+            cout << "Use over-the-counter pain relievers and cough suppressants." << endl << "Consider getting an antigen test." << endl;
+        } else if (riskScore >= 50 && riskScore < 100) {
+            cout << "Get a PCR molecular test." << endl;
+        } else {
+            cout << "Seek medical attention immediately." << endl;
+        }
+
+        if (chestPain >= 7 && chestPain <= 10) {
+            cout << "Severe chest pain is serious." << endl << "You should seek immediate medical attention." << endl;
+        }
+
+        if (troubleInBreath >= 7 && troubleInBreath <= 10) {
+            cout << "Severe Breath Troubling is serious." << endl << "You should seek immediate medical attention." << endl;
+        }
+
+        // Ask if the user wants to continue
+        cout << "Would you like to interview another person? (Y/N): ";
+        cin >> continueInterview;
+
+    } 
+    // repeat if user inputs Y 
+    while (continueInterview == 'Y' || continueInterview == 'y');
+
+    cout << "Thank you for using the NOVID24 assessment program." << endl;
+    return 0;
+
+}
+
